@@ -1,13 +1,13 @@
 Package: QuickAndDirtyABAAnalisis
-Title: Paquete para análisis rápido y sucio de la base de datos ABA.
-Version: 0.0.0.9001
+Title: Paquete para análisis rápido y sucio de la base de datos ABA
+Version: 0.0.0.9002
 Authors@R: 
     person(given = "Edgar",
            family = "Morales",
            role = c("aut", "cre"),
            email = "edgar.morales@aprendr.org")
 Description: Este paquete permite descargar las bases de ABA y procesar las de forma sencilla.
-    Este paquete intenta facilitar el procesamiento de las bases de datos ABA para la clase de Diseño experimental
+    Este paquete intenta facilitar el procesamiento de las bases de datos ABA para la clase de Diseño experimental.
 License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
@@ -15,3 +15,4 @@ Imports:
     data.table,
     ABAData,
     ABAEnrichment
+RoxygenNote: 6.1.1
