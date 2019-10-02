@@ -27,7 +27,7 @@ GetAllAreasSimplified <- function() {
   all.areas <- ABAEnrichment::get_id('')
   data.table::setDT(all.areas)
   all.areas[, structure := tolower(structure)]
-  return(all.areas)
+  return(all.areas[])
 }
 
 #' Obtiene las areas relacionadas con un Gen específico
