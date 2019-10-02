@@ -20,3 +20,6 @@ Obtiene las areas relacionadas con un Gen específico
 \examples{
 GetGenAreas(gene.name.pattern = 'A1BG', selected.dataset = "dataset_5_stages")
 }
+\seealso{
+\code{\link{GetAreasGenes}} para obtener areas
+}

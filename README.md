@@ -18,7 +18,7 @@ install.packages('devtools')
 ```
 
 Suponiendo que ya se tienen instalados los paquetes de ABA, lo siguiente es instalar el paquete `QuickAndDirtyABAAnalisis()`
- de no tener los paquetes instalados, podemos usar los comandos de la [siguiente sección](#-problemas-con-aba)
+ de no tener los paquetes instalados, podemos usar los comandos de la [siguiente sección](#primero-instalamos-el-manager-de-bioconductor)
 
 ``` r
 devtools::install_github('nekrum/QuickAndDirtyABAAnalisis')

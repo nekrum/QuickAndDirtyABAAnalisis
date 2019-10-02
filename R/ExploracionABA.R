@@ -24,6 +24,7 @@
 #' @return Data table con todas las areas disponibles en la base de datos
 #' @export
 #'
+#'
 #' @importFrom methods is
 #'
 #' @examples
@@ -48,7 +49,10 @@ GetDatasetAreasSimplified <- function(selected.dataset = "dataset_adult") {
 #' @return Data.table con las areas en las que se expresa el gen seleccionado.
 #' @export
 #'
+#' @seealso \code{\link{GetAreasGenes}} para obtener areas
+#'
 #' @importFrom data.table %like%
+#
 #'
 #' @examples
 #' GetGenAreas(gene.name.pattern = 'A1BG', selected.dataset = "dataset_5_stages")
@@ -71,6 +75,8 @@ GetGenAreas <- function(gene.name.pattern, selected.dataset = "dataset_adult") {
 #'
 #' @return Cata.table con los genes expresados en el área seleccionada
 #' @export
+#'
+#' @seealso \code{\link{GetGenAreas}} para obtener areas
 #'
 #' @importFrom data.table %like% :=
 #'
