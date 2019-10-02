@@ -21,3 +21,6 @@ Obtiene los genes que se expresan en una area
 \examples{
 GetAreasGenes(area.selected = 'accumbens', selected.dataset = "dataset_adult")
 }
+\seealso{
+\code{\link{GetGenAreas}} para obtener areas
+}
