@@ -15,6 +15,21 @@
   return(selected.dataset)
 }
 
+
+#' Obtiene todas las areas disponibles
+#'
+#' @return Data table con todas las areas disponibles en la base de datos
+#' @export
+#'
+#' @examples
+#' all.areas <- GetAllAreasSimplified()
+GetAllAreasSimplified <- function() {
+  all.areas <- ABAEnrichment::get_id('')
+  data.table::setDT(all.areas)
+  all.areas[, structure := tolower(structure)]
+  return(all.areas)
+}
+
 #' Obtiene las areas relacionadas con un Gen específico
 #'
 #' @param gene.name.pattern Nombre completo o nombre parcial del gen en cuestión
@@ -54,9 +69,7 @@ GetGenAreas <- function(gene.name.pattern, selected.dataset = "dataset_adult") {
 GetAreasGenes <-function(area.selected = 'accumbens',  selected.dataset = "dataset_adult"){
   selected.dataset <- .SelectDataset(selected.dataset)
   area.selected <- tolower(area.selected)
-  all.areas <- ABAEnrichment::get_id('')
-  data.table::setDT(all.areas)
-  all.areas[, structure := tolower(structure)]
+  all.areas <- GetAllAreasSimplified()
   area.id <- all.areas[grepl(area.selected, structure), unique(structure_id)]
   area.id <- gsub("^.*:", "", area.id)
   area.dataset <- selected.dataset[structure %in% area.id]
