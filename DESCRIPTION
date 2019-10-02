@@ -14,5 +14,6 @@ LazyData: true
 Imports: 
     data.table,
     ABAData,
-    ABAEnrichment
+    ABAEnrichment,
+    methods
 RoxygenNote: 6.1.1

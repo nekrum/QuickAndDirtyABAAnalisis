@@ -18,15 +18,25 @@
 
 #' Obtiene todas las areas disponibles
 #'
+#' @param selected.dataset Selección de una de las tres bases de datos existente, esta función tambien acepta un data.frame
+#' con los números de area que querramos identificar en una columna llamada structure.
+#'
 #' @return Data table con todas las areas disponibles en la base de datos
 #' @export
 #'
+#' @importFrom methods is
+#'
 #' @examples
-#' all.areas <- GetAllAreasSimplified()
-GetAllAreasSimplified <- function() {
+#' all.areas <- GetDatasetAreasSimplified()
+GetDatasetAreasSimplified <- function(selected.dataset = "dataset_adult") {
+  if(is(selected.dataset, "character")) {
+    selected.dataset <- .SelectDataset(selected.dataset)
+  }
   all.areas <- ABAEnrichment::get_id('')
   data.table::setDT(all.areas)
   all.areas[, structure := tolower(structure)]
+  all.areas[, structure_id := gsub("^.*:", "", structure_id)]
+  all.areas <- unique(all.areas[structure_id %in% unique(selected.dataset$structure), .(structure, structure_id)])
   return(all.areas[])
 }
 
@@ -66,12 +76,11 @@ GetGenAreas <- function(gene.name.pattern, selected.dataset = "dataset_adult") {
 #'
 #' @examples
 #' GetAreasGenes(area.selected = 'accumbens', selected.dataset = "dataset_adult")
-GetAreasGenes <-function(area.selected = 'accumbens',  selected.dataset = "dataset_adult"){
+GetAreasGenes <-function(area.selected = 'accumbens', selected.dataset = "dataset_adult"){
   selected.dataset <- .SelectDataset(selected.dataset)
   area.selected <- tolower(area.selected)
-  all.areas <- GetAllAreasSimplified()
+  all.areas <- GetDatasetAreasSimplified(selected.dataset)
   area.id <- all.areas[grepl(area.selected, structure), unique(structure_id)]
-  area.id <- gsub("^.*:", "", area.id)
   area.dataset <- selected.dataset[structure %in% area.id]
   if(nrow(area.dataset) == 0) {
     stop("Area not found")
