@@ -17,13 +17,15 @@ El primer paso es instalar el paquete `devtools()`
 install.packages('devtools')
 ```
 
-Despues es necesario instalar el paquete.
+Suponiendo que ya se tienen instalados los paquetes de ABA, lo siguiente es instalar el paquete `QuickAndDirtyABAAnalisis()`
+ de no tener los paquetes instalados, podemos usar los comandos de la [siguiente sección](#-problemas-con-aba)
 
 ``` r
 devtools::install_github('nekrum/QuickAndDirtyABAAnalisis')
 ```
 
 ## Problemas con ABA
+
 
 El paquete ABA no tiene una instalación similar a la que generalmente se realiza con los paquetes de R, por lo que puede
 haber problemas en la instalación. En caso de que la instalación se dificulte, es posible instalar los paquetes de manera
@@ -67,4 +69,9 @@ GetGenAreas(gene.name.pattern = 'A1BG', selected.dataset = "dataset_5_stages")
 
 ```r
 GetAreasGenes(area.selected = 'accumbens', selected.dataset = "dataset_adult")
+```
+### Para obtener todas las areas de un dataset
+
+```r
+GetDatasetAreasSimplified(selected.dataset = 'dataset_5_stages')
 ```
