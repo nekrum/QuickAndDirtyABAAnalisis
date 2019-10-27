@@ -14,7 +14,7 @@ experimental en la licenciatura de Neurobiología.
 \section{Funciones del paquete}{
 
 
-GetGenAreas : Obtiene las áreas relacionadas con la expresión de un gen
+GetGenAreas: Obtiene las áreas relacionadas con la expresión de un gen
 
 GetAreasGenes: Obtiene los genes relaciondados con una área
 

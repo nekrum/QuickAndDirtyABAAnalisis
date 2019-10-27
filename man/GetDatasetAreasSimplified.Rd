@@ -14,7 +14,8 @@ con los números de area que querramos identificar en una columna llamada struct
 Data table con todas las areas disponibles en la base de datos
 }
 \description{
-Obtiene todas las areas disponibles
+Con esta función se puedne obtener todas las areas que tiene un dataset. Ademas proporciona la abreviación,
+el identificador de área, si tiene un hemisferio definido y el nombre de la estructura.
 }
 \examples{
 all.areas <- GetDatasetAreasSimplified()

@@ -15,5 +15,6 @@ Imports:
     data.table,
     ABAData,
     ABAEnrichment,
-    methods
+    methods,
+    stringr
 RoxygenNote: 6.1.1
