@@ -95,7 +95,7 @@ GetGenAreas <- function(gene.name.pattern = NULL, ensembl.id = NULL, selected.da
 #' @param structure.id Identificador del area de la que se quieren obtener los genes expresados
 #' @param selected.dataset Selección de una de las tres bases de datos disponibles en ABA
 #'
-#' @return Cata.table con los genes expresados en el área seleccionada
+#' @return data.table con los genes expresados en el área seleccionada
 #' @export
 #'
 #' @seealso \code{\link{GetGenAreas}} para obtener areas
@@ -103,21 +103,41 @@ GetGenAreas <- function(gene.name.pattern = NULL, ensembl.id = NULL, selected.da
 #' @importFrom data.table %like% :=
 #'
 #' @examples
-#' GetAreasGenes(area.selected = 'accumbens', selected.dataset = "dataset_adult")
-GetAreasGenes <-function(structure.selected = 'accumbens', structure.id = NULL, selected.dataset = "dataset_adult"){
+#' GetAreasGenes(structure.selected = 'accumbens', selected.dataset = "dataset_adult")
+#' GetAreasGenes(structure.id = 4679, selected.dataset = "dataset_adult")
+#' GetAreasGenes(structure.selected = 'accumbens', structure.id = 4679, selected.dataset = "dataset_adult")
+GetAreasGenes <-function(structure.selected = NULL, structure.id = NULL, selected.dataset = "dataset_adult"){
   if(is.null(structure.selected) & is.null(structure.id)) {
     stop("Not structure provided")
   }
   selected.data <- .SelectDataset(selected.dataset)
   all.areas <- GetDatasetAreasSimplified(selected.dataset)
-  if (any(is.null(structure.selected), is.na(structure.selected), is.numeric(sstructure.selected), structure.selected == "")) {
-
+  if (any(
+      is.null(structure.selected),
+      is.na(structure.selected),
+      is.numeric(structure.selected),
+      structure.selected == ""
+    ) & !is.null(structure.id)) {
+    if(!is.numeric(as.numeric(structure.id))) {
+      stop("Not valid structure id")
+    }
+    area.dataset <- selected.data[structure %in% structure.id]
+  } else if(
+    any(
+      is.null(structure.id), is.na(structure.id), is.numeric(structure.id), structure.id == ""
+    ) & !is.null(structure.selected)
+  ) {
+    structure.selected <- tolower(structure.selected)
+    area.id <- all.areas[grepl(structure.selected, tolower(structure)), unique(structure_id)]
+    area.dataset <- selected.data[structure %in% area.id]
+  } else {
+    if(!is.numeric(as.numeric(structure.id))) {
+      stop("Not valid structure id")
+    }
+    structure.selected <- tolower(structure.selected)
+    area.id <- all.areas[grepl(structure.selected, tolower(structure)), unique(structure_id)]
+    area.dataset <- selected.data[structure %in% c(area.id, structure.id)]
   }
-
-  structure.selected <- tolower(structure.selected)
-
-  area.id <- all.areas[grepl(structure.selected, structure), unique(structure_id)]
-  area.dataset <- selected.dataset[structure %in% area.id]
   if(nrow(area.dataset) == 0) {
     stop("Area not found")
   }
