@@ -4,10 +4,13 @@
 \alias{GetGenAreas}
 \title{Obtiene las areas relacionadas con un Gen específico}
 \usage{
-GetGenAreas(gene.name.pattern, selected.dataset = "dataset_adult")
+GetGenAreas(gene.name.pattern = NULL, ensembl.id = NULL,
+  selected.dataset = "dataset_adult")
 }
 \arguments{
 \item{gene.name.pattern}{Nombre completo o nombre parcial del gen en cuestión}
+
+\item{ensembl.id}{Nombre completo o nombre parcial del identificador}
 
 \item{selected.dataset}{Selección de una de las tres bases de datos disponibles en ABA}
 }
@@ -15,10 +18,11 @@ GetGenAreas(gene.name.pattern, selected.dataset = "dataset_adult")
 Data.table con las areas en las que se expresa el gen seleccionado.
 }
 \description{
-Obtiene las areas relacionadas con un Gen específico
+Con esta función se pueden buscar los genes estudiados en uno de los dataset, buscandolo por el nombre o por el
+identificador ensembl.
 }
 \examples{
-GetGenAreas(gene.name.pattern = 'A1BG', selected.dataset = "dataset_5_stages")
+GetGenAreas(gene.name.pattern = 'A1BG',ensembl.id = 'ENSG', selected.dataset = "dataset_5_stages")
 }
 \seealso{
 \code{\link{GetAreasGenes}} para obtener areas
