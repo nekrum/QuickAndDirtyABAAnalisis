@@ -4,22 +4,26 @@
 \alias{GetAreasGenes}
 \title{Obtiene los genes que se expresan en una area}
 \usage{
-GetAreasGenes(area.selected = "accumbens",
+GetAreasGenes(structure.selected = NULL, structure.id = NULL,
   selected.dataset = "dataset_adult")
 }
 \arguments{
-\item{area.selected}{Nombre completo o nombre parcial del area de la que se quieren obtener los genes expresados}
+\item{structure.selected}{Nombre completo o nombre parcial del area de la que se quieren obtener los genes expresados}
+
+\item{structure.id}{Identificador del area de la que se quieren obtener los genes expresados}
 
 \item{selected.dataset}{Selección de una de las tres bases de datos disponibles en ABA}
 }
 \value{
-Cata.table con los genes expresados en el área seleccionada
+data.table con los genes expresados en el área seleccionada
 }
 \description{
-Obtiene los genes que se expresan en una area
+A partir del area seleccionada se pueden identificar los genes expresados dentro de la base seleccionada.
 }
 \examples{
-GetAreasGenes(area.selected = 'accumbens', selected.dataset = "dataset_adult")
+GetAreasGenes(structure.selected = 'accumbens', selected.dataset = "dataset_adult")
+GetAreasGenes(structure.id = 4679, selected.dataset = "dataset_adult")
+GetAreasGenes(structure.selected = 'accumbens', structure.id = 4679, selected.dataset = "dataset_adult")
 }
 \seealso{
 \code{\link{GetGenAreas}} para obtener areas
