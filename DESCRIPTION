@@ -1,6 +1,6 @@
 Package: QuickAndDirtyABAAnalisis
 Title: Paquete para análisis rápido y sucio de la base de datos ABA
-Version: 0.0.0.9003
+Version: 0.0.0.9004
 Authors@R: 
     person(given = "Edgar",
            family = "Morales",

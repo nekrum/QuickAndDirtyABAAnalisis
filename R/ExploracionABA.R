@@ -17,7 +17,7 @@
 
 #' Obtiene todas las areas disponibles
 #'
-#' Con esta función se puedne obtener todas las areas que tiene un dataset. Ademas proporciona la abreviación,
+#' Con esta función se pueden obtener todas las areas que tiene un dataset. Ademas proporciona la abreviación,
 #' el identificador de área, si tiene un hemisferio definido y el nombre de la estructura.
 #'
 #' @param selected.dataset Selección de una de las tres bases de datos existente, esta función tambien acepta un data.frame
@@ -55,6 +55,8 @@ GetDatasetAreasSimplified <- function(selected.dataset = "dataset_adult") {
 #' @param gene.name.pattern Nombre completo o nombre parcial del gen en cuestión
 #' @param ensembl.id Nombre completo o nombre parcial del identificador
 #' @param selected.dataset Selección de una de las tres bases de datos disponibles en ABA
+#' @param intersec.data Si es TRUE (opción default) se muestran los resultados encontrados para **gene.name.pattern**
+#' y **ensembl.id**. Cunado es FALSE se muestran los resultados para los dos
 #'
 #' @return Data.table con las areas en las que se expresa el gen seleccionado.
 #' @export
@@ -65,8 +67,10 @@ GetDatasetAreasSimplified <- function(selected.dataset = "dataset_adult") {
 #
 #'
 #' @examples
-#' GetGenAreas(gene.name.pattern = 'A1BG',ensembl.id = 'ENSG', selected.dataset = "dataset_5_stages")
-GetGenAreas <- function(gene.name.pattern = NULL, ensembl.id = NULL, selected.dataset = "dataset_adult") {
+#' GetGenAreas(gene.name.pattern = 'A1BG', selected.dataset = "dataset_5_stages")
+#' GetGenAreas(ensembl.id = 'ENSG', selected.dataset = "dataset_5_stages")
+#' GetGenAreas(gene.name.pattern = 'A1BG', ensembl.id = 'ENSG', selected.dataset = "dataset_5_stages")
+GetGenAreas <- function(gene.name.pattern = NULL, ensembl.id = NULL, selected.dataset = "dataset_adult", intersec.data = TRUE) {
   if(is.null(gene.name.pattern) & is.null(ensembl.id)) {
     stop("Not gen provided")
   }
@@ -76,7 +80,11 @@ GetGenAreas <- function(gene.name.pattern = NULL, ensembl.id = NULL, selected.da
   } else if(is.null(ensembl.id)) {
     gene.dataset <- selected.dataset[hgnc_symbol %like% gene.name.pattern]
   } else (
-    gene.dataset <- selected.dataset[hgnc_symbol %like% gene.name.pattern & ensembl_gene_id %like% ensembl.id]
+    if (intersec.data) {
+      gene.dataset <- selected.dataset[hgnc_symbol %like% gene.name.pattern & ensembl_gene_id %like% ensembl.id]
+    } else {
+      gene.dataset <- selected.dataset[hgnc_symbol %like% gene.name.pattern | ensembl_gene_id %like% ensembl.id]
+    }
   )
   if (nrow(gene.dataset) == 0) {
     stop("Gen not found")
@@ -84,6 +92,7 @@ GetGenAreas <- function(gene.name.pattern = NULL, ensembl.id = NULL, selected.da
   unique.areas <- unique(gene.dataset$structure)
   area.names <- data.table::data.table(structure = unique.areas, structure.name = ABAEnrichment::get_name(unique.areas))
   gene.dataset <- merge(gene.dataset, area.names)
+  data.table::setDT(gene.dataset)
   return(gene.dataset)
 }
 
@@ -91,7 +100,7 @@ GetGenAreas <- function(gene.name.pattern = NULL, ensembl.id = NULL, selected.da
 #'
 #' A partir del area seleccionada se pueden identificar los genes expresados dentro de la base seleccionada.
 #'
-#' @param area.selected Nombre completo o nombre parcial del area de la que se quieren obtener los genes expresados
+#' @param structure.selected Nombre completo o nombre parcial del area de la que se quieren obtener los genes expresados
 #' @param structure.id Identificador del area de la que se quieren obtener los genes expresados
 #' @param selected.dataset Selección de una de las tres bases de datos disponibles en ABA
 #'
@@ -106,7 +115,7 @@ GetGenAreas <- function(gene.name.pattern = NULL, ensembl.id = NULL, selected.da
 #' GetAreasGenes(structure.selected = 'accumbens', selected.dataset = "dataset_adult")
 #' GetAreasGenes(structure.id = 4679, selected.dataset = "dataset_adult")
 #' GetAreasGenes(structure.selected = 'accumbens', structure.id = 4679, selected.dataset = "dataset_adult")
-GetAreasGenes <-function(structure.selected = NULL, structure.id = NULL, selected.dataset = "dataset_adult"){
+    GetAreasGenes <-function(structure.selected = NULL, structure.id = NULL, selected.dataset = "dataset_adult"){
   if(is.null(structure.selected) & is.null(structure.id)) {
     stop("Not structure provided")
   }
@@ -124,7 +133,7 @@ GetAreasGenes <-function(structure.selected = NULL, structure.id = NULL, selecte
     area.dataset <- selected.data[structure %in% structure.id]
   } else if(
     any(
-      is.null(structure.id), is.na(structure.id), is.numeric(structure.id), structure.id == ""
+      is.null(structure.id), is.na(structure.id), structure.id == ""
     ) & !is.null(structure.selected)
   ) {
     structure.selected <- tolower(structure.selected)
