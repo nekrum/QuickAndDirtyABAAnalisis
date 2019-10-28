@@ -8,11 +8,11 @@ GetAreasGenes(structure.selected = NULL, structure.id = NULL,
   selected.dataset = "dataset_adult")
 }
 \arguments{
+\item{structure.selected}{Nombre completo o nombre parcial del area de la que se quieren obtener los genes expresados}
+
 \item{structure.id}{Identificador del area de la que se quieren obtener los genes expresados}
 
 \item{selected.dataset}{Selección de una de las tres bases de datos disponibles en ABA}
-
-\item{area.selected}{Nombre completo o nombre parcial del area de la que se quieren obtener los genes expresados}
 }
 \value{
 data.table con los genes expresados en el área seleccionada
